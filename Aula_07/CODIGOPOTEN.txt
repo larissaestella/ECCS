@@ -1,0 +1,39 @@
+#include <Servo.h>
+
+// Define o pino do servo motor
+int servoPin = 9;
+
+// Define o pino do potenciômetro
+int potPin = A0;
+
+// Cria um objeto do tipo Servo
+Servo servoMotor;
+
+void setup() {
+// Define o pino do servo motor como saída
+pinMode(servoPin, OUTPUT);
+
+// Anexa o objeto do tipo Servo ao pino do servo motor
+servoMotor.attach(servoPin);
+
+// Inicializa a porta serial com uma taxa de transmissão de 9600 bps
+//Serial.begin(9600);
+}
+
+void loop() {
+// Lê o valor do potenciômetro
+int potValue = analogRead(potPin);
+
+// Converte o valor do potenciômetro para a posição do servo motor
+int servoPos = map(potValue, 1023, 0, 0, 180);
+
+// Define a posição do servo motor
+servoMotor.write(servoPos);
+
+// Mostra a posição atual do servo motor na porta serial
+//Serial.print("Posicao atual : ");
+//Serial.println(servoPos);
+
+// Espera um curto período antes de ler o valor do potenciômetro novamente
+delay(15);
+}

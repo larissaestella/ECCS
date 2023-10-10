@@ -1,0 +1,57 @@
+8:33 AM 10/10/2023const int trigger = 4; 
+const int echo    = 5; 
+const int ledG    = 9;
+const int ledY    = 12;
+const int ledR    = 13;
+float dist = 0;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(trigger,OUTPUT);
+  pinMode(echo,INPUT);
+  pinMode(ledG,OUTPUT);
+  pinMode(ledY,OUTPUT);
+  pinMode(ledR,OUTPUT);
+}
+
+void loop(){
+  digitalWrite(trigger,LOW);
+  delayMicroseconds(5);        
+  digitalWrite(trigger,HIGH);  
+  delayMicroseconds(10);      
+  digitalWrite(trigger,LOW); 
+  
+  dist=pulseIn(echo,HIGH);      
+  dist = dist/58;                  // Convertendo para centimetros
+  Serial.print ("Distancia = ");
+  Serial.print (dist);         
+  Serial.print (" cm");         
+  Serial.write (10);            
+  delay (200); 
+  
+  if (dist < 40){
+    digitalWrite(ledR, HIGH);
+    digitalWrite(ledG, LOW);
+    digitalWrite(ledY, LOW);
+  }
+  else if (dist > 40 && dist < 100){
+    digitalWrite(ledY, HIGH);
+    digitalWrite(ledG, LOW);
+    digitalWrite(ledR, LOW);
+  }
+  else{
+    digitalWrite(ledG, HIGH);
+    digitalWrite(ledR, LOW);
+    digitalWrite(ledY, LOW);
+  }
+
+  /*
+   	Agora acione os leds conforme a distancia lida
+   	1 - Muito perto : Vermelho
+    2 - Média distância: Amarelo
+    3 - Longe: Verde
+  */
+}                             
+
+
+
